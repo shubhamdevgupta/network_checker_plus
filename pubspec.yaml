@@ -1,20 +1,22 @@
 name: network_checker_plus
-description: A Flutter plugin to check network status, type and signal on Android (iOS support coming soon).
+description: A Flutter plugin to check network connectivity, type, and more.
 version: 0.0.1
 homepage: https://github.com/shubhamdevgupta/network_checker_plus
 repository: https://github.com/shubhamdevgupta/network_checker_plus
 issue_tracker: https://github.com/shubhamdevgupta/network_checker_plus/issues
-maintainer: hutesjk@gmail.com
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.10.0"
+  sdk: '>=3.2.0 <4.0.0'
+  flutter: '>=3.10.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  connectivity_plus: ^5.0.2
-  http: ^1.2.1
+  plugin_platform_interface: ^2.1.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
 
 flutter:
   plugin:
