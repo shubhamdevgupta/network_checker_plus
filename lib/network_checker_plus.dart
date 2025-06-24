@@ -1,5 +1,4 @@
 
-import 'network_checker_plus_platform_interface.dart';
 import 'package:flutter/services.dart'; // ✅ REQUIRED
 
 
