@@ -1,4 +1,4 @@
-## [1.0.3] - 2025-06-24
+## [1.0.4] - 2025-06-24
 
 ### ✨ Features
 - ✅ `isConnected()` – Check if device is connected to the internet.
