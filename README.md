@@ -1,21 +1,20 @@
-
-# 📡 network_checker_plus
+# 📡 network\_checker\_plus
 
 [![Pub Version](https://img.shields.io/pub/v/network_checker_plus.svg)](https://pub.dev/packages/network_checker_plus)
-[![Platform Support](https://img.shields.io/badge/platforms-android%20|%20ios-lightgrey)]()
+[![Platform Support](https://img.shields.io/badge/platforms-android%20%7C%20ios-lightgrey)]()
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-A lightweight and efficient Flutter plugin to check the network status of the device. Easily determine whether the user is connected to the internet and what type of network they’re using — Wi-Fi, mobile data, or none.
+A lightweight and efficient Flutter plugin to check the network status of the device. Easily determine whether the user is connected to the internet and what type of network they’re using — Wi-Fi, mobile data, or none. Now with support for network speed, signal strength, and real-time connectivity stream.
 
 ---
 
 ## ✨ Features
 
-✅ Check if the device is connected to the internet  
-✅ Detect the type of connection (Wi-Fi, Mobile, or None)  
-🔄 *(Coming soon)* Estimate network speed (e.g., ping a server or download a small file)  
-📶 *(Coming soon)* Measure signal strength (Wi-Fi or mobile)  
-⏱ *(Coming soon)* Real-time stream of connectivity and signal strength changes  
+✅ Check if the device is connected to the internet
+✅ Detect the type of connection (Wi-Fi, Mobile, or None)
+✅ Estimate network speed (e.g., ping a server or download a small file)
+✅ Measure signal strength (Wi-Fi)
+✅ Real-time stream of connectivity status
 
 ---
 
@@ -50,21 +49,59 @@ import 'package:network_checker_plus/network_checker_plus.dart';
 
 ```dart
 final bool isConnected = await NetworkCheckerPlus.isConnected();
-print('Connected: $isConnected');
+print('Connected: \$isConnected');
 ```
 
 ### 📡 Get Connection Type
 
 ```dart
 final String type = await NetworkCheckerPlus.getConnectionType();
-print('Connection Type: $type');
+print('Connection Type: \$type');
 ```
 
 > Possible values:
-> - 'wifi'
-> - 'mobile'
-> - 'none'
-> - 'unknown'
+>
+> * 'wifi'
+> * 'mobile'
+> * 'none'
+> * 'unknown'
+
+### ⌛️ Estimate Network Speed
+
+```dart
+final String speed = await NetworkCheckerPlus.getNetworkSpeed();
+print('Network Speed: \$speed');
+```
+
+> Possible values:
+>
+> * "Excellent"
+> * "Good"
+> * "Moderate"
+> * "Poor"
+> * "No Connection"
+
+### 📶 Get Signal Strength (Wi-Fi only)
+
+```dart
+final int strength = await NetworkCheckerPlus.getSignalStrength();
+print('Signal Strength: \$strength/4');
+```
+
+> Signal levels range from 0 (Weak) to 4 (Excellent).
+
+### ⏳ Listen to Connectivity Changes
+
+```dart
+NetworkCheckerPlus.connectivityStream.listen((event) {
+  print('Connectivity Changed: \$event');
+});
+```
+
+> Events:
+>
+> * 'connected'
+> * 'disconnected'
 
 ---
 
@@ -72,13 +109,14 @@ print('Connection Type: $type');
 
 ### 📱 Android
 
-Make sure you add the following permission in `android/app/src/main/AndroidManifest.xml`:
+Ensure you add the following permissions in `android/app/src/main/AndroidManifest.xml`:
 
 ```xml
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 ```
 
-*(Coming soon features may require additional permissions such as `ACCESS_WIFI_STATE` and `ACCESS_FINE_LOCATION`.)*
+Some features (e.g., signal strength) may require `ACCESS_FINE_LOCATION` on newer Android versions.
 
 ---
 
@@ -95,11 +133,12 @@ flutter run
 
 ## 💡 Roadmap
 
-- [x] Check network connection
-- [x] Detect connection type (Wi-Fi or Mobile)
-- [ ] Check basic network speed
-- [ ] Measure signal strength (Wi-Fi/Mobile)
-- [ ] Real-time listener for network changes
+* [x] Check network connection
+* [x] Detect connection type (Wi-Fi or Mobile)
+* [x] Estimate basic network speed
+* [x] Measure Wi-Fi signal strength
+* [x] Real-time listener for network changes
+* [ ] Support signal strength for mobile networks
 
 ---
 
