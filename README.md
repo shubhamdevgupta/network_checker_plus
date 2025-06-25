@@ -4,7 +4,7 @@
 [![Platform Support](https://img.shields.io/badge/platforms-android%20%7C%20ios-lightgrey)]()
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-A lightweight and efficient Flutter plugin to check the network status of the device. Easily determine whether the user is connected to the internet and what type of network they’re using — Wi-Fi, mobile data, or none. Now with support for network speed, signal strength, and real-time connectivity stream.
+A lightweight and efficient Flutter plugin to check the network status of the device. Easily determine whether the user is connected to the internet and what type of network they’re using — Wi-Fi, mobile data, or none. Now with support for network speed, signal strength, and real-time connectivity stream.   
 
 ---
 
