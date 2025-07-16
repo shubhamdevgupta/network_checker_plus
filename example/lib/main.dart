@@ -1,6 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:network_checker_plus/network_checker_plus.dart';
 
 void main() {
@@ -33,8 +33,10 @@ class _NetworkCheckerHomePageState extends State<NetworkCheckerHomePage> {
   String _networkSpeed = 'Unknown';
   int _signalStrength = -1;
   String _connectivityStream = 'Waiting...';
+  String _realTimeSpeed = 'Calculating...';
 
   StreamSubscription<String>? _subscription;
+  Timer? _realTimeSpeedTimer;
 
   Future<void> _updateNetworkInfo() async {
     try {
@@ -54,6 +56,42 @@ class _NetworkCheckerHomePageState extends State<NetworkCheckerHomePage> {
     }
   }
 
+  Future<void> _getRealTimeNetworkSpeed() async {
+    const testUrl = 'https://t3.ftcdn.net/jpg/12/13/72/80/240_F_1213728051_pFIL7Ysaklimctx4U9s0wNvH4oKrNPCO.jpg';
+    final uri = Uri.parse(testUrl);
+
+    final stopwatch = Stopwatch()..start();
+
+    try {
+      final response = await http.get(uri);
+      stopwatch.stop();
+
+      if (response.statusCode == 200) {
+        final bytes = response.bodyBytes.length;
+        final seconds = stopwatch.elapsedMilliseconds / 1000.0;
+        final kbps = (bytes / 1024) / seconds;
+        final mbps = kbps / 1024;
+
+        setState(() {
+          if (mbps >= 1) {
+            _realTimeSpeed = '${mbps.toStringAsFixed(2)} MB/s';
+          } else {
+            _realTimeSpeed = '${kbps.toStringAsFixed(2)} KB/s';
+          }
+        });
+      } else {
+        setState(() {
+          _realTimeSpeed = 'Failed (${response.statusCode})';
+        });
+      }
+    } catch (e) {
+      stopwatch.stop();
+      setState(() {
+        _realTimeSpeed = 'Error: $e';
+      });
+    }
+  }
+
   void _startListeningToConnectivity() {
     _subscription = NetworkCheckerPlus.connectivityStream.listen((event) {
       setState(() {
@@ -62,16 +100,24 @@ class _NetworkCheckerHomePageState extends State<NetworkCheckerHomePage> {
     });
   }
 
+  void _startRealTimeSpeedTest() {
+    _realTimeSpeedTimer = Timer.periodic(const Duration(seconds: 5), (_) {
+      _getRealTimeNetworkSpeed();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _updateNetworkInfo();
     _startListeningToConnectivity();
+    _startRealTimeSpeedTest();
   }
 
   @override
   void dispose() {
     _subscription?.cancel();
+    _realTimeSpeedTimer?.cancel();
     super.dispose();
   }
 
@@ -107,6 +153,11 @@ class _NetworkCheckerHomePageState extends State<NetworkCheckerHomePage> {
             ListTile(
               title: const Text("Connectivity Stream"),
               trailing: Text(_connectivityStream),
+            ),
+            const Divider(),
+            ListTile(
+              title: const Text("Real-Time Speed (Auto Refresh)"),
+              trailing: Text(_realTimeSpeed),
             ),
           ],
         ),
