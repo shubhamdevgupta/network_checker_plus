@@ -11,9 +11,13 @@ A lightweight and efficient Flutter plugin to check the network status of the de
 ## ✨ Features
 
 ✅ Check if the device is connected to the internet
+
 ✅ Detect the type of connection (Wi-Fi, Mobile, or None)
+
 ✅ Estimate network speed (e.g., ping a server or download a small file)
+
 ✅ Measure signal strength (Wi-Fi)
+
 ✅ Real-time stream of connectivity status
 
 ---
