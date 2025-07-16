@@ -1,4 +1,4 @@
-## [1.0.4] - 2025-06-24
+## [1.0.5] - 2025-07-16
 
 ### ✨ Features
 - ✅ `isConnected()` – Check if device is connected to the internet.
@@ -14,6 +14,7 @@
 ### 🔧 Improvements
 - Organized platform code and improved null safety.
 - Added support for Android 6.0+ network callbacks.
+- Added realtime network speed checks.
 
 ---
 
